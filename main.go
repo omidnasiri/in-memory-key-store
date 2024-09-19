@@ -9,4 +9,6 @@ func main() {
 		WithInitialHashMapUnderlyingArraySize(5).
 		WithListCapacity(5).
 		Build()
+
+	// pass kvs to application layer
 }
