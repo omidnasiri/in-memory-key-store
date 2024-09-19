@@ -41,6 +41,34 @@ func (l *List) InsertHead(data string) string {
 	return removedNodeData
 }
 
+func (l *List) Delete(data string) {
+	if l.empty() {
+		return
+	}
+
+	current := l.head
+	for current != nil {
+		if current.data == data {
+			if current.prev == nil {
+				l.head = current.next
+			} else {
+				current.prev.next = current.next
+			}
+
+			if current.next == nil {
+				l.tail = current.prev
+			} else {
+				current.next.prev = current.prev
+			}
+
+			l.population--
+			return
+		}
+
+		current = current.next
+	}
+}
+
 func (l *List) removeTail() string {
 	if l.empty() {
 		return ""
