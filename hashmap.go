@@ -10,13 +10,13 @@ type hashMapNode struct {
 
 type HashMap struct {
 	population int
-	hashFunc   func(key string, limit int) int
+	hashFunc   HashFunction
 
 	// Using 2D slice to implement chaining in response to the collision problem.
 	bucket [][]*hashMapNode
 }
 
-func NewHashMap(hashFunc func(key string, limit int) int, initialUnderlyingArraySize int) *HashMap {
+func NewHashMap(hashFunc HashFunction, initialUnderlyingArraySize int) *HashMap {
 	return &HashMap{
 		bucket:   make([][]*hashMapNode, initialUnderlyingArraySize),
 		hashFunc: hashFunc,

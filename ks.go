@@ -13,7 +13,7 @@ type KS struct {
 
 func NewKS() *KS {
 	return &KS{
-		HashMap: NewHashMap(func(key string, limit int) int { return 0 }, defaultInitialHashMapUnderlyingArraySize),
+		HashMap: NewHashMap(FowlerNollVoHashFunction, defaultInitialHashMapUnderlyingArraySize),
 	}
 }
 
