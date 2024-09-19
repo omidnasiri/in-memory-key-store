@@ -1,4 +1,4 @@
-package main
+package ks
 
 type listNode struct {
 	data string
@@ -6,20 +6,20 @@ type listNode struct {
 	prev *listNode
 }
 
-type List struct {
+type list struct {
 	head       *listNode
 	tail       *listNode
 	capacity   int
 	population int
 }
 
-func NewList(capacity int) *List {
-	return &List{
+func NewList(capacity int) *list {
+	return &list{
 		capacity: capacity,
 	}
 }
 
-func (l *List) InsertHead(data string) string {
+func (l *list) InsertHead(data string) string {
 	var removedNodeData string
 
 	if l.full() {
@@ -41,7 +41,7 @@ func (l *List) InsertHead(data string) string {
 	return removedNodeData
 }
 
-func (l *List) Delete(data string) {
+func (l *list) Delete(data string) {
 	if l.empty() {
 		return
 	}
@@ -69,7 +69,7 @@ func (l *List) Delete(data string) {
 	}
 }
 
-func (l *List) removeTail() string {
+func (l *list) removeTail() string {
 	if l.empty() {
 		return ""
 	}
@@ -88,14 +88,14 @@ func (l *List) removeTail() string {
 	return removedNodeData
 }
 
-func (l *List) peek() string {
+func (l *list) peek() string {
 	return l.head.data
 }
 
-func (l *List) empty() bool {
+func (l *list) empty() bool {
 	return l.head == nil && l.tail == nil
 }
 
-func (l *List) full() bool {
+func (l *list) full() bool {
 	return l.population == l.capacity
 }

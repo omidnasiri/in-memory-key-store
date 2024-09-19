@@ -1,4 +1,4 @@
-package main
+package ks
 
 import "time"
 
@@ -8,8 +8,8 @@ const (
 )
 
 type KS struct {
-	HashMap *HashMap
-	List    *List
+	HashMap *hashMap
+	List    *list
 }
 
 func NewKS() *KS {

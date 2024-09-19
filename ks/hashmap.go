@@ -1,4 +1,4 @@
-package main
+package ks
 
 import "time"
 
@@ -8,7 +8,7 @@ type hashMapNode struct {
 	expiry time.Time
 }
 
-type HashMap struct {
+type hashMap struct {
 	population int
 	hashFunc   HashFunction
 
@@ -16,14 +16,14 @@ type HashMap struct {
 	bucket [][]*hashMapNode
 }
 
-func NewHashMap(hashFunc HashFunction, initialUnderlyingArraySize int) *HashMap {
-	return &HashMap{
+func NewHashMap(hashFunc HashFunction, initialUnderlyingArraySize int) *hashMap {
+	return &hashMap{
 		bucket:   make([][]*hashMapNode, initialUnderlyingArraySize),
 		hashFunc: hashFunc,
 	}
 }
 
-func (hm *HashMap) Set(key string, value string, ttl time.Duration) {
+func (hm *hashMap) Set(key string, value string, ttl time.Duration) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
 	for _, node := range hm.bucket[index] {
@@ -44,7 +44,7 @@ func (hm *HashMap) Set(key string, value string, ttl time.Duration) {
 	hm.population++
 }
 
-func (hm *HashMap) Get(key string) (string, bool) {
+func (hm *hashMap) Get(key string) (string, bool) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
 	for _, node := range hm.bucket[index] {
@@ -60,7 +60,7 @@ func (hm *HashMap) Get(key string) (string, bool) {
 	return "", false
 }
 
-func (hm *HashMap) Delete(key string) {
+func (hm *hashMap) Delete(key string) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
 	for i, node := range hm.bucket[index] {
