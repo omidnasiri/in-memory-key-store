@@ -20,6 +20,17 @@ func NewKS() *KS {
 }
 
 func (ks *KS) Set(key string, value string, ttl int) {
+	// cheapest way to find out if the key already exists and
+	// we need to update the value and move the key to the head of the list
+	// instead of inserting it at the head of the list
+	if _, ok := ks.HashMap.Get(key); ok {
+		ks.List.Delete(key)
+	}
+
+	if removedKey := ks.List.InsertHead(key); removedKey != "" {
+		ks.HashMap.Delete(removedKey)
+	}
+
 	ks.HashMap.Set(key, value, time.Duration(ttl)*time.Second)
 }
 

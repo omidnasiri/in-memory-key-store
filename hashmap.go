@@ -50,6 +50,7 @@ func (hm *HashMap) Get(key string) (string, bool) {
 	for _, node := range hm.bucket[index] {
 		if node.key == key {
 			if node.expiry.Before(time.Now()) {
+				// could also remove the node here
 				return "", false
 			}
 			return node.value, true
@@ -57,4 +58,16 @@ func (hm *HashMap) Get(key string) (string, bool) {
 	}
 
 	return "", false
+}
+
+func (hm *HashMap) Delete(key string) {
+	index := hm.hashFunc(key, len(hm.bucket))
+
+	for i, node := range hm.bucket[index] {
+		if node.key == key {
+			hm.bucket[index] = append(hm.bucket[index][:i], hm.bucket[index][i+1:]...)
+			hm.population--
+			return
+		}
+	}
 }
