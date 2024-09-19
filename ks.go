@@ -4,16 +4,18 @@ import "time"
 
 const (
 	defaultInitialHashMapUnderlyingArraySize int = 16
+	defaultListCapacity                      int = 100
 )
 
 type KS struct {
 	HashMap *HashMap
-	List    any
+	List    *List
 }
 
 func NewKS() *KS {
 	return &KS{
 		HashMap: NewHashMap(FowlerNollVoHashFunction, defaultInitialHashMapUnderlyingArraySize),
+		List:    NewList(defaultListCapacity),
 	}
 }
 
