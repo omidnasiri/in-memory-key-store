@@ -13,13 +13,13 @@ type list struct {
 	population int
 }
 
-func NewList(capacity int) *list {
+func newList(capacity int) *list {
 	return &list{
 		capacity: capacity,
 	}
 }
 
-func (l *list) InsertHead(data string) string {
+func (l *list) insertHead(data string) string {
 	var removedNodeData string
 
 	if l.full() {
@@ -41,7 +41,7 @@ func (l *list) InsertHead(data string) string {
 	return removedNodeData
 }
 
-func (l *list) Delete(data string) {
+func (l *list) delete(data string) {
 	if l.empty() {
 		return
 	}

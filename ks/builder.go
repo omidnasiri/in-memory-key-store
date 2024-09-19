@@ -6,22 +6,22 @@ type KSBuilder struct {
 
 func NewKSBuilder() *KSBuilder {
 	return &KSBuilder{
-		ks: NewKS(),
+		ks: newKS(),
 	}
 }
 
 func (ksb *KSBuilder) WithHashFunction(hashFunc HashFunction) *KSBuilder {
-	ksb.ks.HashMap.hashFunc = hashFunc
+	ksb.ks.hashMap.hashFunc = hashFunc
 	return ksb
 }
 
 func (ksb *KSBuilder) WithInitialHashMapUnderlyingArraySize(size int) *KSBuilder {
-	ksb.ks.HashMap.bucket = make([][]*hashMapNode, size)
+	ksb.ks.hashMap.bucket = make([][]*hashMapNode, size)
 	return ksb
 }
 
 func (ksb *KSBuilder) WithListCapacity(capacity int) *KSBuilder {
-	ksb.ks.List.capacity = capacity
+	ksb.ks.list.capacity = capacity
 	return ksb
 }
 

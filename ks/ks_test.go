@@ -6,23 +6,23 @@ import (
 )
 
 func TestNewKS(t *testing.T) {
-	ks := NewKS()
+	ks := newKS()
 
 	if ks == nil {
 		t.Fatal("Expected NewKS to return a non-nil KS instance")
 	}
 
-	if ks.HashMap == nil {
+	if ks.hashMap == nil {
 		t.Fatal("Expected HashMap to be initialized")
 	}
 
-	if ks.List == nil {
+	if ks.list == nil {
 		t.Fatal("Expected List to be initialized")
 	}
 }
 
 func TestKS_Set(t *testing.T) {
-	ks := NewKS()
+	ks := newKS()
 
 	// Test setting a new key-value pair
 	ks.Set("key1", "value1", 10)
@@ -54,7 +54,7 @@ func TestKS_Set(t *testing.T) {
 }
 
 func TestKS_Get(t *testing.T) {
-	ks := NewKS()
+	ks := newKS()
 
 	// Test getting a value for a non-existent key
 	value, ok := ks.Get("nonexistent")

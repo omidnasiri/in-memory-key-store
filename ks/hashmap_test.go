@@ -7,7 +7,7 @@ import (
 
 func TestNewHashMap(t *testing.T) {
 	initialSize := 5
-	hm := NewHashMap(FowlerNollVoHashFunction, initialSize)
+	hm := newHashMap(FowlerNollVoHashFunction, initialSize)
 
 	if len(hm.bucket) != initialSize {
 		t.Errorf("Expected bucket size %d, got %d", initialSize, len(hm.bucket))
@@ -23,12 +23,12 @@ func TestNewHashMap(t *testing.T) {
 }
 
 func TestSet(t *testing.T) {
-	hm := NewHashMap(FowlerNollVoHashFunction, 5)
+	hm := newHashMap(FowlerNollVoHashFunction, 5)
 	key := "testKey"
 	value := "testValue"
 	ttl := 1 * time.Hour
 
-	hm.Set(key, value, ttl)
+	hm.set(key, value, ttl)
 
 	index := hm.hashFunc(key, len(hm.bucket))
 	found := false
@@ -49,14 +49,14 @@ func TestSet(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	hm := NewHashMap(FowlerNollVoHashFunction, 5)
+	hm := newHashMap(FowlerNollVoHashFunction, 5)
 	key := "testKey"
 	value := "testValue"
 	ttl := 1 * time.Hour
 
-	hm.Set(key, value, ttl)
+	hm.set(key, value, ttl)
 
-	gotValue, found := hm.Get(key)
+	gotValue, found := hm.get(key)
 	if !found {
 		t.Errorf("Expected to find key %s", key)
 	}
@@ -66,28 +66,28 @@ func TestGet(t *testing.T) {
 }
 
 func TestGetExpiredKey(t *testing.T) {
-	hm := NewHashMap(FowlerNollVoHashFunction, 5)
+	hm := newHashMap(FowlerNollVoHashFunction, 5)
 	key := "testKey"
 	value := "testValue"
 	ttl := -1 * time.Hour // Set TTL in the past to expire immediately
 
-	hm.Set(key, value, ttl)
+	hm.set(key, value, ttl)
 
-	_, found := hm.Get(key)
+	_, found := hm.get(key)
 	if found {
 		t.Errorf("Expected not to find key %s as it should be expired", key)
 	}
 }
 
 func TestSetOverwrite(t *testing.T) {
-	hm := NewHashMap(FowlerNollVoHashFunction, 5)
+	hm := newHashMap(FowlerNollVoHashFunction, 5)
 	key := "testKey"
 	value1 := "testValue1"
 	value2 := "testValue2"
 	ttl := 1 * time.Hour
 
-	hm.Set(key, value1, ttl)
-	hm.Set(key, value2, ttl)
+	hm.set(key, value1, ttl)
+	hm.set(key, value2, ttl)
 
 	index := hm.hashFunc(key, len(hm.bucket))
 	count := 0
@@ -105,15 +105,15 @@ func TestSetOverwrite(t *testing.T) {
 }
 
 func TestSetWithCollision(t *testing.T) {
-	hm := NewHashMap(FowlerNollVoHashFunction, 1) // Force collision by using a single bucket
+	hm := newHashMap(FowlerNollVoHashFunction, 1) // Force collision by using a single bucket
 	key1 := "testKey1"
 	value1 := "testValue1"
 	key2 := "testKey2"
 	value2 := "testValue2"
 	ttl := 1 * time.Hour
 
-	hm.Set(key1, value1, ttl)
-	hm.Set(key2, value2, ttl)
+	hm.set(key1, value1, ttl)
+	hm.set(key2, value2, ttl)
 
 	if len(hm.bucket[0]) != 2 {
 		t.Errorf("Expected bucket to contain 2 items, got %d", len(hm.bucket[0]))

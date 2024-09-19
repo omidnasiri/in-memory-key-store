@@ -39,10 +39,10 @@ func TestInsertHead(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			list := NewList(tt.capacity)
+			list := newList(tt.capacity)
 			var removedData string
 			for _, data := range tt.insertions {
-				removedData = list.InsertHead(data)
+				removedData = list.insertHead(data)
 			}
 
 			if list.head.data != tt.expectedHead {
@@ -84,7 +84,7 @@ func TestNewList(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			list := NewList(tt.capacity)
+			list := newList(tt.capacity)
 
 			if list.capacity != tt.capacity {
 				t.Errorf("expected capacity %v, got %v", tt.capacity, list.capacity)
@@ -142,9 +142,9 @@ func TestRemoveTail(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			list := NewList(tt.capacity)
+			list := newList(tt.capacity)
 			for _, data := range tt.insertions {
-				list.InsertHead(data)
+				list.insertHead(data)
 			}
 
 			removedData := list.removeTail()
@@ -232,12 +232,12 @@ func TestDelete(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			list := NewList(tt.capacity)
+			list := newList(tt.capacity)
 			for _, data := range tt.insertions {
-				list.InsertHead(data)
+				list.insertHead(data)
 			}
 
-			list.Delete(tt.deleteData)
+			list.delete(tt.deleteData)
 
 			if list.head != nil && list.head.data != tt.expectedHead {
 				t.Errorf("expected head %v, got %v", tt.expectedHead, list.head.data)

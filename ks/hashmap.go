@@ -16,14 +16,14 @@ type hashMap struct {
 	bucket [][]*hashMapNode
 }
 
-func NewHashMap(hashFunc HashFunction, initialUnderlyingArraySize int) *hashMap {
+func newHashMap(hashFunc HashFunction, initialUnderlyingArraySize int) *hashMap {
 	return &hashMap{
 		bucket:   make([][]*hashMapNode, initialUnderlyingArraySize),
 		hashFunc: hashFunc,
 	}
 }
 
-func (hm *hashMap) Set(key string, value string, ttl time.Duration) {
+func (hm *hashMap) set(key string, value string, ttl time.Duration) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
 	for _, node := range hm.bucket[index] {
@@ -44,7 +44,7 @@ func (hm *hashMap) Set(key string, value string, ttl time.Duration) {
 	hm.population++
 }
 
-func (hm *hashMap) Get(key string) (string, bool) {
+func (hm *hashMap) get(key string) (string, bool) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
 	for _, node := range hm.bucket[index] {
@@ -60,7 +60,7 @@ func (hm *hashMap) Get(key string) (string, bool) {
 	return "", false
 }
 
-func (hm *hashMap) Delete(key string) {
+func (hm *hashMap) delete(key string) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
 	for i, node := range hm.bucket[index] {
