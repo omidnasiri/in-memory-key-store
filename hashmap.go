@@ -26,6 +26,14 @@ func NewHashMap(hashFunc HashFunction, initialUnderlyingArraySize int) *HashMap 
 func (hm *HashMap) Set(key string, value string, ttl time.Duration) {
 	index := hm.hashFunc(key, len(hm.bucket))
 
+	for _, node := range hm.bucket[index] {
+		if node.key == key {
+			node.value = value
+			node.expiry = time.Now().Add(ttl)
+			return
+		}
+	}
+
 	node := &hashMapNode{
 		key:    key,
 		value:  value,
