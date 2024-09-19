@@ -1,4 +1,4 @@
-package ks
+package kvs
 
 const (
 	fnvOffsetBasis uint64 = 14695981039346656037

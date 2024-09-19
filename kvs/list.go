@@ -1,4 +1,4 @@
-package ks
+package kvs
 
 type listNode struct {
 	data string
